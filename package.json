@@ -1,6 +1,6 @@
 {
   "name": "odoo-xmlrpc",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "Nodejs client to call Odoo RPC's through xmlrpc library.",
   "author": {
     "name": "Faisal Sami",
@@ -8,13 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/faisalsami/odoo-xmlrpc.git"
+    "url": "https://github.com/faisalsami/odoo-xmlrpc"
   },
   "homepage": "https://github.com/faisalsami/odoo-xmlrpc",
   "bugs": "https://github.com/faisalsami/odoo-xmlrpc/issues",
   "os": [
     "any"
   ],
+  "readme": "https://github.com/faisalsami/odoo-xmlrpc/blob/master/README.md",
   "directories": {
     "lib": "./lib/"
   },
