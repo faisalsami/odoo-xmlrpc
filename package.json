@@ -1,6 +1,6 @@
 {
   "name": "odoo-xmlrpc",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Nodejs client to call Odoo RPC's through xmlrpc library.",
   "author": {
     "name": "Faisal Sami",
