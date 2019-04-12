@@ -12,9 +12,6 @@
   },
   "homepage": "https://github.com/faisalsami/odoo-xmlrpc",
   "bugs": "https://github.com/faisalsami/odoo-xmlrpc/issues",
-  "os": [
-    "any"
-  ],
   "readme": "https://github.com/faisalsami/odoo-xmlrpc/blob/master/README.md",
   "directories": {
     "lib": "./lib/"
