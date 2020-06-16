@@ -14,9 +14,9 @@
   "bugs": "https://github.com/faisalsami/odoo-xmlrpc/issues",
   "readme": "https://github.com/faisalsami/odoo-xmlrpc/blob/master/README.md",
   "directories": {
-    "lib": "./src/"
+    "lib": "./dist/"
   },
-  "main": "./src/index.js",
+  "main": "./dist/index.js",
   "engines": {
     "node": ">=0.8",
     "npm": ">=1.0.0"
@@ -26,7 +26,9 @@
     "url": "*"
   },
   "license": "Apache-2.0",
-  "scripts": {},
+  "scripts": {
+    "build": "babel src -d dist"
+  },
   "keywords": [
     "odoo",
     "xmlrpc"
