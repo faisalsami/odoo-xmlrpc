@@ -14,9 +14,9 @@
   "bugs": "https://github.com/faisalsami/odoo-xmlrpc/issues",
   "readme": "https://github.com/faisalsami/odoo-xmlrpc/blob/master/README.md",
   "directories": {
-    "lib": "./lib/"
+    "lib": "./src/"
   },
-  "main": "./lib/index.js",
+  "main": "./src/index.js",
   "engines": {
     "node": ">=0.8",
     "npm": ">=1.0.0"
