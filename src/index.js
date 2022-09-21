@@ -11,11 +11,11 @@ import {
   createClient,
   createSecureClient,
 } from 'xmlrpc';
-import url from 'url';
+import { URL } from 'url';
 
 class Odoo {
   constructor(config = {}) {
-    this.config = config; const urlparts = url.parse(config.url);
+    this.config = config; const urlparts = new URL(config.url);
     this.host = urlparts.hostname;
     this.port = config.port || urlparts.port;
     this.db = config.db;
