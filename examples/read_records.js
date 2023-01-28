@@ -1,31 +1,35 @@
-var Odoo = require('../lib/index');
+import OdooModule from "../dist/index.js"; // use 'odoo-xmlrpc-promise' in your project";
+
+// @ts-ignore file
+const Odoo = OdooModule.default;
 
 var odoo = new Odoo({
-    url: '<insert server URL>',
-    port: '<insert server port default 80>',
-    db: '<insert database name>',
-    username: '<insert username>',
-    password: '<insert password>'
+  url: "<insert server URL>",
+  //port: '<insert server port default 80>',
+  db: "<insert db name>",
+  username: "<insert username>",
+  password: "<insert password>",
 });
 
-odoo.connect(function (err) {
-    if (err) { return console.log(err); }
-    console.log('Connected to Odoo server.');
-    var inParams = [];
-    inParams.push([['is_company', '=', true],['customer', '=', true]]);
-    inParams.push(0);  //offset
-    inParams.push(1);  //Limit
-    var params = [];
-    params.push(inParams);
-    odoo.execute_kw('res.partner', 'search', params, function (err, value) {
-        if (err) { return console.log(err); }
-        var inParams = [];
-        inParams.push(value); //ids
-        var params = [];
-        params.push(inParams);
-        odoo.execute_kw('res.partner', 'read', params, function (err2, value2) {
-            if (err2) { return console.log(err2); }
-            console.log('Result: ', value2);
-        });
+(async () => {
+  try {
+    const uid = await odoo.connect();
+    console.log("Connected to Odoo server. Uid: ", uid);
+
+    const companyIds = await odoo.execute_kw({
+      model: "res.partner",
+      method: "search",
+      params: [[[["is_company", "=", true]], 0, 1]],
     });
-});
+
+    const companies = await odoo.execute_kw({
+      model: "res.partner",
+      method: "read",
+      params: [[companyIds]],
+    });
+
+    console.log("Result: ", companies);
+  } catch (err) {
+    console.log(err);
+  }
+})();

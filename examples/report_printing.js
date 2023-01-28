@@ -1,29 +1,37 @@
-var Odoo = require('../lib/index');
+import OdooModule from "../dist/index.js"; // use 'odoo-xmlrpc-promise' in your project";
+
+// @ts-ignore file
+const Odoo = OdooModule.default;
 
 var odoo = new Odoo({
-    url: '<insert server URL>',
-    port: '<insert server port default 80>',
-    db: '<insert database name>',
-    username: '<insert username>',
-    password: '<insert password>'
+  url: "<insert server URL>",
+  //port: '<insert server port default 80>',
+  db: "<insert db name>",
+  username: "<insert username>",
+  password: "<insert password>",
 });
 
-odoo.connect(function (err) {
-    if (err) { return console.log(err); }
-    console.log('Connected to Odoo server.');
-    var inParams = [];
-    inParams.push([['type', '=', 'out_invoice'], ['state', '=', 'open']]);
-    var params = [];
-    params.push(inParams);
-    odoo.execute_kw('account.invoice', 'search', params, function (err, value) {
-        if (err) { return console.log(err); }
-        if(value){
-            var params = [];
-            params.push(value);
-            odoo.render_report('account.report_invoice', params, function (err2, value2) {
-                if (err2) { return console.log(err2); }
-                console.log('Result: ' + value2);
-            });
-        }
+(async () => {
+  try {
+    const uid = await odoo.connect();
+    console.log("Connected to Odoo server. Uid: ", uid);
+
+    const invoiceIds = await odoo.execute_kw({
+      model: "account.move", //Since Odoo 13, account.invoice has been replaced by account.move
+      method: "search",
+      params: [[[["move_type", "=", "in_invoice"]]]],
     });
-});
+
+    console.log("invoiceIds: ", invoiceIds);
+
+    const [reportId] = await odoo.execute_kw({
+      model: "ir.actions.report",
+      method: "search",
+      params: [[[["report_type", "=", "qweb-pdf"]]]],
+    });
+
+    // I don't find the action to get pdf in doc
+  } catch (err) {
+    console.log(err);
+  }
+})();

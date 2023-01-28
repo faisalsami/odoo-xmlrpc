@@ -1,22 +1,29 @@
-var Odoo = require('../lib/index');
+import OdooModule from "../dist/index.js"; // use 'odoo-xmlrpc-promise' in your project";
+
+// @ts-ignore file
+const Odoo = OdooModule.default;
 
 var odoo = new Odoo({
-    url: '<insert server URL>',
-    port: '<insert server port default 80>',
-    db: '<insert database name>',
-    username: '<insert username>',
-    password: '<insert password>'
+  url: "<insert server URL>",
+  //port: '<insert server port default 80>',
+  db: "<insert db name>",
+  username: "<insert username>",
+  password: "<insert password>",
 });
 
-odoo.connect(function (err) {
-    if (err) { return console.log(err); }
-    console.log('Connected to Odoo server.');
-    var inParams = [];
-    inParams.push([['is_company', '=', true],['customer', '=', true]]);
-    var params = [];
-    params.push(inParams);
-    odoo.execute_kw('res.partner', 'search_count', params, function (err, value) {
-        if (err) { return console.log(err); }
-        console.log('Result: ', value);
+(async () => {
+  try {
+    const uid = await odoo.connect();
+    console.log("Connected to Odoo server. Uid: ", uid);
+
+    const count = await odoo.execute_kw({
+      model: "res.partner",
+      method: "search_count",
+      params: [[[["is_company", "=", true]]]],
     });
-});
+
+    console.log("Result: ", count);
+  } catch (err) {
+    console.log(err);
+  }
+})();
